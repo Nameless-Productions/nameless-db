@@ -1,6 +1,7 @@
 import { debug } from "./debug.js";
 import { server } from "./server.js";
 import readline from "readline"
+import { getValue } from "./utils.js";
 
 server.once("listening", () => {
     if (debug) console.log("Server listening")
@@ -19,6 +20,15 @@ server.once("listening", () => {
             switch (command) {
                 case "PING": {
                     socket.write("PONG\n");
+                    break;
+                }
+                case "GET": {
+                    if (!args[0]) {
+                        socket.write("ERROR No name provided\n");
+                        break;
+                    }
+                    const value = getValue(args[0]);
+                    socket.write(`VALUE ${args[0]} ${value}\n`);
                     break;
                 }
                 default: {
