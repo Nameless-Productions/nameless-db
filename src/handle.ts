@@ -1,3 +1,4 @@
+import { Socket } from "dgram";
 import { debug } from "./debug.js";
 import { server } from "./server.js";
 import readline from "readline"
@@ -5,6 +6,7 @@ import readline from "readline"
 server.once("listening", () => {
     if (debug) console.log("Server listening")
     server.on("connection", async (socket) => {
+        socket.write("HELLO\n");
         if (debug) {
             console.log(`New connection: ${socket.remoteAddress}`)
             socket.on("close", () => console.log(`Connection closed with ${socket.remoteAddress}`))
