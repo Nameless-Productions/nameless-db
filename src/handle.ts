@@ -1,7 +1,7 @@
 import { debug } from "./debug.js";
 import { server } from "./server.js";
 import readline from "readline"
-import { getValue, setValue } from "./utils.js";
+import { deleteValue, getValue, setValue } from "./utils.js";
 
 server.once("listening", () => {
     if (debug) console.log("Server listening")
@@ -40,6 +40,15 @@ server.once("listening", () => {
                     setValue(args[0], args[1]);
                     socket.write(`VALUE ${args[0]} ${args[1]}\n`);
                     return;
+                }
+                case "DELETE": {
+                    if (!args[0]) {
+                        socket.write("ERROR missing arg");
+                        return;
+                    }
+
+                    deleteValue(args[0]);
+                    break;
                 }
                 default: {
                     socket.write("ERROR Command not found\n");
