@@ -1,7 +1,7 @@
 import { debug } from "./debug.js";
 import { server } from "./server.js";
 import readline from "readline"
-import { getValue } from "./utils.js";
+import { getValue, setValue } from "./utils.js";
 
 server.once("listening", () => {
     if (debug) console.log("Server listening")
@@ -30,6 +30,16 @@ server.once("listening", () => {
                     const value = getValue(args[0]);
                     socket.write(`VALUE ${args[0]} ${value}\n`);
                     break;
+                }
+                case "SET": {
+                    if (!args[0] || !args[1]) {
+                        socket.write("ERROR missing arg(s)");
+                        break;
+                    }
+
+                    setValue(args[0], args[1]);
+                    socket.write(`VALUE ${args[0]} ${args[1]}`);
+                    return;
                 }
                 default: {
                     socket.write("ERROR Command not found\n");
