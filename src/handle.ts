@@ -13,7 +13,7 @@ server.once("listening", () => {
         const rl = readline.createInterface({input: socket});
 
         rl.on("line", async (line) => {
-            const command = line.split(" ")[0];
+            const [command, ...args] = line.split(" ");
 
             switch (command) {
                 case "PING": {
