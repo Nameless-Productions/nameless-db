@@ -37,8 +37,8 @@ server.once("listening", () => {
                         break;
                     }
 
-                    setValue(args[0], args[1]);
-                    socket.write(`VALUE ${args[0]} ${args[1]}\n`);
+                    setValue(args[0], args.slice(1).join(" "));
+                    socket.write(`VALUE ${args[0]} ${args.slice(1).join(" ")}\n`);
                     break;
                 }
                 case "DELETE": {
