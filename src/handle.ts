@@ -39,12 +39,12 @@ server.once("listening", () => {
 
                     setValue(args[0], args[1]);
                     socket.write(`VALUE ${args[0]} ${args[1]}\n`);
-                    return;
+                    break;
                 }
                 case "DELETE": {
                     if (!args[0]) {
                         socket.write("ERROR missing arg");
-                        return;
+                        break;
                     }
 
                     deleteValue(args[0]);
