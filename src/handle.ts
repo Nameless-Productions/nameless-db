@@ -33,7 +33,7 @@ server.once("listening", () => {
                 }
                 case "SET": {
                     if (!args[0] || !args[1]) {
-                        socket.write("ERROR missing arg(s)");
+                        socket.write("ERROR missing arg(s)\n");
                         break;
                     }
 
@@ -43,7 +43,7 @@ server.once("listening", () => {
                 }
                 case "DELETE": {
                     if (!args[0]) {
-                        socket.write("ERROR missing arg");
+                        socket.write("ERROR missing arg\n");
                         break;
                     }
 
