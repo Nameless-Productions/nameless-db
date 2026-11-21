@@ -7,3 +7,7 @@ export function getValue(name: string) {
 export function setValue(name: string, content: string) {
     data.set(name, {data: content});
 }
+
+export function deleteValue(name: string) {
+    data.delete(name);
+}
