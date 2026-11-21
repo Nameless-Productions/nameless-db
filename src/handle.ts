@@ -38,7 +38,7 @@ server.once("listening", () => {
                     }
 
                     setValue(args[0], args[1]);
-                    socket.write(`VALUE ${args[0]} ${args[1]}`);
+                    socket.write(`VALUE ${args[0]} ${args[1]}\n`);
                     return;
                 }
                 default: {
