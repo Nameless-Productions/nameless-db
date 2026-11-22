@@ -6,6 +6,8 @@ import { deleteValue, getValue, setValue } from "./utils.js";
 server.once("listening", () => {
     if (debug) console.log("Server listening")
     server.on("connection", async (socket) => {
+        let isAuthed = false;
+
         socket.write("HELLO\n");
         if (debug) {
             console.log(`New connection: ${socket.remoteAddress}`)
@@ -16,6 +18,10 @@ server.once("listening", () => {
 
         rl.on("line", async (line) => {
             const [command, ...args] = line.split(" ");
+            if (command !== "AUTH" && !isAuthed) {
+                socket.write("ERROR not authed\n");
+                return;
+            }
 
             switch (command) {
                 case "PING": {
