@@ -64,7 +64,7 @@ server.once("listening", () => {
 
                     const password = process.env.PASSWORD!;
                     if (args[0] !== password) {
-                        socket.write("ERROR Incorrect password");
+                        socket.write("ERROR Incorrect password\n");
                         break;
                     }
                     socket.write("HELLO\n");
