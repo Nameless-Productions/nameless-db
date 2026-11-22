@@ -4,11 +4,11 @@ import readline from "readline"
 import { deleteValue, getValue, setValue } from "./utils.js";
 
 server.once("listening", () => {
-    if (debug) console.log("Server listening")
+    if (debug) console.log("Server listening");
+    if  (!process.env.PASSWORD) throw new Error("Missing password")
     server.on("connection", async (socket) => {
         let isAuthed = false;
 
-        socket.write("HELLO\n");
         if (debug) {
             console.log(`New connection: ${socket.remoteAddress}`)
             socket.on("close", () => console.log(`Connection closed with ${socket.remoteAddress}`))
@@ -55,6 +55,22 @@ server.once("listening", () => {
 
                     deleteValue(args[0]);
                     break;
+                }
+                case "AUTH": {
+                    if (!args[0]) {
+                        socket.write("ERROR Missing password\n");
+                        break;
+                    }
+
+                    const password = process.env.PASSWORD!;
+                    if (args[0] !== password) {
+                        socket.write("ERROR Incorrect password");
+                        break;
+                    }
+                    socket.write("HELLO\n");
+                    isAuthed = true;
+                    break;
+                    
                 }
                 default: {
                     socket.write("ERROR Command not found\n");
